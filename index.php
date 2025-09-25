@@ -29,24 +29,7 @@ var_dump(Select($dbh, 'users'));*/
 </head>
 
 <body>
-    <header>
-        <a href="index.php">
-            <img src="assets/img/logo.png" alt="logo"/>
-        </a>
-        <nav>
-            <a href="auth.php">
-                <button>
-                    ВХОД
-                </button>
-            </a>
-            <a href="reg.php">
-                <button>
-                    РЕГИСТРАЦИЯ
-                </button>
-            </a>
-        </nav>
-    </header>
-    
+    <?php include("assets/includes/header.php") ?>
     <main>
         <div class="list">
             <div class="cell">
@@ -111,6 +94,8 @@ var_dump(Select($dbh, 'users'));*/
             
         </div>
     </main>
+
+    <?php include("assets/includes/footer.php") ?>
 </body>
 
 </html>
