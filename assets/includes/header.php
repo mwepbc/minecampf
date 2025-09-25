@@ -3,7 +3,19 @@
         <img src="assets/img/logo.png" alt="logo" />
     </a>
     <nav>
-        <a href="auth.php">
+        <?php
+        if (isset($_COOKIE['user_id'])) {
+            echo '
+                <a href="index.php">
+            <button>
+                ВЫХОД
+            </button>
+        </a>
+            ';
+
+            setcookie("user_id", "", time() - 3600);
+        } else {
+            echo '<a href="auth.php">
             <button>
                 ВХОД
             </button>
@@ -12,6 +24,9 @@
             <button>
                 РЕГИСТРАЦИЯ
             </button>
-        </a>
+        </a>';
+        }
+        ?>
+
     </nav>
 </header>

@@ -1,5 +1,30 @@
-<?php 
+<?php
 include("assets/functions/connect.php");
+
+$error = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['role'])) {
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        $role = $_POST['role'];
+
+        $sth = $dbh->prepare('INSERT INTO users
+        (`id`, `login`, `password`, `role`)
+        VALUES (NULL, ?, ?, ?)');
+        $sth->execute([$login, $password, $role]);
+        $user = $sth->fetch();
+
+        if ($user) {
+            header("Location: auth.php");
+        } else {
+            $error = "Ошибка регистрации!!!";
+        }
+    } else {
+        $error = "Заполните все поля";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -12,10 +37,10 @@ include("assets/functions/connect.php");
 </head>
 
 <body>
-    <?php 
+    <?php
     include("assets/includes/header.php");
 
-     ?>
+    ?>
     <main class="formPage">
         <form action="" method="POST">
             <h1>
@@ -36,6 +61,7 @@ include("assets/functions/connect.php");
                     <option value="user">Пользователь</option>
                 </select>
             </div>
+            <p><?php echo $error ?></p>
             <button type="submit">ПОДТВЕРДИТЬ</button>
         </form>
     </main>
