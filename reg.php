@@ -9,10 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $_POST['password'];
         $role = $_POST['role'];
 
+        // вставка в бд
         $sth = $dbh->prepare('INSERT INTO users
         (`id`, `login`, `password`, `role`)
         VALUES (NULL, ?, ?, ?)');
         $sth->execute([$login, $password, $role]);
+
+        // проверка на то, что юзер зарегался
+        $sth = $dbh->prepare('SELECT * FROM users WHERE login=? AND password=?');
+        $sth->execute([$login, $password]);
         $user = $sth->fetch();
 
         if ($user) {
@@ -61,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="user">Пользователь</option>
                 </select>
             </div>
-            <p><?php echo $error ?></p>
+            <p class="error"><?php echo $error ?></p>
             <button type="submit">ПОДТВЕРДИТЬ</button>
         </form>
     </main>

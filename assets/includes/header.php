@@ -6,7 +6,7 @@
         <?php
         if (isset($_COOKIE['user_id'])) {
             echo '
-                <a href="index.php">
+                <a href="auth.php">
             <button>
                 ВЫХОД
             </button>

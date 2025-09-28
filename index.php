@@ -1,21 +1,10 @@
-<?php 
+<?php
 
-/*$dsn = 'mysql:dbname=dilyara203;host=localhost';
-$user = 'dilyara203';
-$password = 'Dilyara203';
+include("assets/functions/connect.php");
+include("assets/functions/crafts/select.php");
+include("assets/functions/items/select.php");
 
-$dbh = new PDO($dsn, $user, $password);
 
-function Select($dbh, $table){
-	$sql = 'SELECT * FROM '.$table;
-	$sth = $dbh->prepare($sql, [PDO::ATTR_CURSOR => 				PDO::CURSOR_FWDONLY]);
-	$sth->execute();
-	$red = $sth->fetchAll();
-
-	return $red;
-}
-
-var_dump(Select($dbh, 'users'));*/
 
 ?>
   
@@ -32,30 +21,21 @@ var_dump(Select($dbh, 'users'));*/
     <?php include("assets/includes/header.php") ?>
     <main>
         <div class="list">
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
-            <div class="cell">
-                
-            </div>
+            <?php 
+            foreach ($crafts as $craft) {
+                $crafting_item = defeniteItem($dbh, $craft['crafting_item']);
+
+                echo '
+                    <div class="cell">
+                        <input type="hidden" name="select" value="'.$craft['id'].'">
+                        <img src="assets/img/'. $crafting_item['image'].'" 
+                        alt="'. $crafting_item['name'].'">
+                    </div>';
+            }
+            
+            ?>
+            
+            
         </div>
         
         <div class="craftingTable">

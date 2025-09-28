@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="password">ПАРОЛЬ</label>
                 <input type="password" name="password">
             </div>
-            <p><?php echo $error ?></p>
+            <p class="error"><?php echo $error ?></p>
             <button type="submit">ПОДТВЕРДИТЬ</button>
         </form>
     </main>
