@@ -1,7 +1,7 @@
 <?php
 
 // Подключение к базе
-$dsn = 'mysql:dbname=minecampf;host=127.0.0.1';
+$dsn = 'mysql:dbname=minecampf;host=127.0.0.1;port=3306';
 $user = 'root';
 $password = '';
 
@@ -10,6 +10,8 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
+
 } catch (PDOException $e) {
     die("Ошибка подключения: " . $e->getMessage());
 }
+?>

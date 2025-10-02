@@ -5,7 +5,6 @@ include("assets/functions/crafts/select.php");
 include("assets/functions/items/select.php");
 
 
-
 ?>
   
 <!DOCTYPE html>
@@ -32,7 +31,6 @@ include("assets/functions/items/select.php");
                         alt="'. $crafting_item['name'].'">
                     </div>';
             }
-            
             ?>
             
             
