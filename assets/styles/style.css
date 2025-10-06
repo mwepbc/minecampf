@@ -61,11 +61,6 @@ main {
 }
 
 .list{
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1vw;
-    
     width: 33%;
 
     padding: 5vh;
@@ -75,11 +70,18 @@ main {
     box-shadow: inset 7px 7px #FFFFFF, inset -7px -7px #555555;
 }
 
-.craftingTable {
+.search{
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
+    gap: 1vw;
+}
 
+.search img{
+    width: 3vw;
+}
+
+.craftingTable {
     width: 390px;
     height: 390px;
     padding: 7vh;
@@ -105,6 +107,7 @@ main {
 
     width: 75px;
     height: 75px;
+    margin: 1vw 1vh;
 
     background: #8B8B8B;
     box-shadow: inset 5px 5px #373737, inset -5px -5px #FFFFFF;
