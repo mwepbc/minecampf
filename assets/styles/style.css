@@ -62,8 +62,10 @@ main {
 
 .list{
     width: 33%;
-
     padding: 5vh;
+
+    table-layout: fixed;
+    border-spacing: 1vh;
 
     background: #D9D9D9;
     border: 7px solid black;
@@ -73,8 +75,6 @@ main {
 .search{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1vw;
 }
 
 .search img{
@@ -100,22 +100,22 @@ main {
     box-shadow: none;
 }
 
-.list .cell, .result {
+.cell, .result {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 75px;
-    height: 75px;
-    margin: 1vw 1vh;
+    
+    width: 90px;
+    height: 90px;
+    padding: 0.5vh;
 
     background: #8B8B8B;
     box-shadow: inset 5px 5px #373737, inset -5px -5px #FFFFFF;
 }
 
-.list .cell img{
-     width: 80%;
-     height: 80%;
+.cell img{
+    width: 80%;
+    height: 80%;
 }
 
 #arrow {

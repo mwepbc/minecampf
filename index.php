@@ -1,18 +1,10 @@
-<?php
-
-include("assets/functions/connect.php");
-include("assets/functions/crafts/select.php");
-include("assets/functions/items/select.php");
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
     <title>minecampf</title>
     <link rel="stylesheet" href="assets/styles/style.css">
 </head>
@@ -21,28 +13,58 @@ include("assets/functions/items/select.php");
     <?php include("assets/includes/header.php") ?>
     <main>
         <table class="list">
+            <colgroup>
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+            </colgroup>
             <thead>
                 <tr>
-                    <th colspan="3" class="search">
-                        <img src="assets/img/search.webp" alt="search">
-                        <input type="search">
+                    <th colspan="4">
+                        <div class="search">
+                            <img src="assets/img/search.webp" alt="search">
+                            <input type="search">
+                        </div>
                     </th>
-                    <th colspan="2" class="filter">
+                    <th colspan="1" class="filter">
                         <img src="assets/img/Recipe Button.png" alt="filter">
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                </tr>
-                <tr>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                </tr>
+                <!-- <tr>
+                    <td>
+                        <div class="cell">
+                            <img src="assets/img/planks.png" alt="item">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="cell">
+                            <img src="assets/img/planks.png" alt="item">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="cell">
+                            <img src="assets/img/planks.png" alt="item">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="cell">
+                            <img src="assets/img/planks.png" alt="item">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="cell">
+                            <img src="assets/img/planks.png" alt="item">
+                        </div>
+                    </td>
+                </tr> -->
             </tbody>
             <tfoot>
                 <tr>
@@ -59,47 +81,50 @@ include("assets/functions/items/select.php");
 
         <table class="craftingTable">
             <tr>
-                <th class="cell"></th>
-                <th class="cell"></th>
-                <th class="cell"></th>
+                <td>
+                    <div class="cell">
+
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+
+                    </div>
+                </td>
             </tr>
             <tr>
-                <th class="cell"></th>
-                <th class="cell"></th>
-                <th class="cell"></th>
+                <td>
+                    <div class="cell">
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+                    </div>
+                </td>
             </tr>
             <tr>
-                <th class="cell"></th>
-                <th class="cell"></th>
-                <th class="cell"></th>
+                <td>
+                    <div class="cell">
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+                    </div>
+                </td>
             </tr>
-            <!-- <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div>
-            <div class="cell">
-
-            </div> -->
         </table>
 
         <img src="assets/img/arrow.png" id="arrow">
@@ -111,5 +136,89 @@ include("assets/functions/items/select.php");
 
     <?php include("assets/includes/footer.php") ?>
 </body>
+<script>
+    let list = document.querySelector('.list tbody');
+
+    async function post(request) {
+        try {
+            const response = await fetch(request);
+            const result = await response.json();
+
+            console.log("Success:", result);
+            list.innerHTML = '';
+
+            // создается массив строк, которые будут у нас tr
+            let rows = [];
+            for (let i = 0; i < result.length; i += 5) {
+                // делим их по 5 предметов
+                rows.push(result.slice(i, i + 5));
+            }
+
+            rows.forEach(row => {
+                // создаем элемент tr
+                let tr = document.createElement('tr');
+
+                // цикл идет по каждой ячейке данных
+                for (let col = 0; col < 5; col++) {
+                    let td = document.createElement('td');
+
+                    if (row[col]) {
+                        td.innerHTML = `
+                        <div class="cell" id_item="${row[col].id}">
+                            <img src="assets/img/${row[col].image}" alt=${row[col].name} id_item="${row[col].id}">
+                        </div>
+                        `;
+                    }
+
+                    td.addEventListener('click', (event) => {
+                        const request2 = new Request("assets/functions/items/selectDef.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                id_item: event.target.getAttribute('id_item')
+                            })
+                        });
+
+                        postDif(request2);
+                    });
+
+                    tr.appendChild(td);
+                }
+
+                // добавляем tr в tbody
+                list.appendChild(tr);
+            });
+
+
+
+        } catch (error) {
+            console.error("Error:", error);
+
+        }
+    }
+
+    const request1 = new Request("assets/functions/items/select.php", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+
+    post(request1);
+
+    // post для отправки selectDif и отображения крафта
+    async function postDif(request) {
+        try {
+            const response = await fetch(request);
+            const result = await response.json();
+            console.log("Success:", result);
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+</script>
 
 </html>
