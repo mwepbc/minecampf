@@ -91,13 +91,21 @@ main {
     background-size: cover;
 }
 
-.craftingTable .cell{
+.craftingTable td{
     height: 80px;
     width: 80px;
 
     border: #553824 solid 15px;
     background: #AE693C;
     box-shadow: none;
+}
+
+.craftingTable div{
+    height: inherit;
+}
+
+.craftingTable img{
+    height: 100%;
 }
 
 .cell, .result {
@@ -113,9 +121,21 @@ main {
     box-shadow: inset 5px 5px #373737, inset -5px -5px #FFFFFF;
 }
 
-.cell img{
-    width: 80%;
+.cell img, .result img{
     height: 80%;
+}
+
+.result{
+    position: relative;
+}
+
+.result  p{
+    position: absolute;
+    right: 10%; bottom: 10%;
+
+    font-size: 3vh;
+    font-weight: bold;
+    color: white;
 }
 
 #arrow {
