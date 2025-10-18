@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Окт 02 2025 г., 15:52
+-- Время создания: Окт 18 2025 г., 16:02
 -- Версия сервера: 10.4.32-MariaDB
--- Версия PHP: 8.2.12
+-- Версия PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `minecampf`
+-- База данных: `minecraft`
 --
 
 -- --------------------------------------------------------
@@ -39,7 +39,7 @@ CREATE TABLE `crafts` (
   `pos_7` int(11) DEFAULT NULL,
   `pos_8` int(11) DEFAULT NULL,
   `pos_9` int(11) DEFAULT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -47,7 +47,10 @@ CREATE TABLE `crafts` (
 --
 
 INSERT INTO `crafts` (`id`, `crafting_item`, `pos_1`, `pos_2`, `pos_3`, `pos_4`, `pos_5`, `pos_6`, `pos_7`, `pos_8`, `pos_9`, `quantity`) VALUES
-(1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4);
+(1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4),
+(2, 3, NULL, NULL, NULL, NULL, 2, NULL, NULL, 2, NULL, 4),
+(3, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, NULL),
+(4, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -67,7 +70,16 @@ CREATE TABLE `items` (
 
 INSERT INTO `items` (`id`, `name`, `image`) VALUES
 (1, 'log', 'log.webp'),
-(2, 'planks', 'planks.png');
+(2, 'planks', 'planks.png'),
+(3, 'stick', 'stick.webp'),
+(4, 'crafting table', 'crafting_table.webp'),
+(5, 'stone pickaxe', 'stone_pickaxe.png'),
+(6, 'wooden pickaxe', 'wooden_pickaxe.webp'),
+(7, 'iron ingot', 'iron_ingot.webp'),
+(8, 'iron nugget', 'iron_nugget.webp'),
+(9, 'iron block', 'iron_block.webp'),
+(10, 'cart', 'cart.webp'),
+(11, 'cauldron', 'cauldron.webp');
 
 -- --------------------------------------------------------
 
@@ -132,13 +144,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `crafts`
 --
 ALTER TABLE `crafts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
