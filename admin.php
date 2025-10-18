@@ -13,5 +13,9 @@
     <h1>Админ панель</h1>
     <?php include('assets/includes/footer.php') ?>
 </body>
+<script src="assets/js/main.js"></script>
+<script>
+    adminCheck();
+</script>
 
 </html>
