@@ -5,79 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
-    <title>minecampf</title>
+    <title>minecraft</title>
     <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 
 <body>
     <?php include("assets/includes/header.php") ?>
     <main>
-        <table class="list">
-            <colgroup>
-                <col style="width: 20%">
-                <col style="width: 20%">
-                <col style="width: 20%">
-                <col style="width: 20%">
-                <col style="width: 20%">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th colspan="4">
-                        <div class="search">
-                            <img src="assets/img/search.webp" alt="search">
-                            <input type="search">
-                        </div>
-                    </th>
-                    <th colspan="1" class="filter">
-                        <img src="assets/img/Recipe Button.png" alt="filter">
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- <tr>
-                    <td>
-                        <div class="cell">
-                            <img src="assets/img/planks.png" alt="item">
-                        </div>
-                    </td>
+        <div class="list">
+            <div class="listhead">
+                <div class="search">
+                    <img src="assets/img/search.webp" alt="search">
+                    <input type="search">
+                </div>
+                <img src="assets/img/Recipe Button.png" alt="filter">
+            </div>
 
-                    <td>
-                        <div class="cell">
-                            <img src="assets/img/planks.png" alt="item">
-                        </div>
-                    </td>
+            <div class="listCells">
+            </div>
 
-                    <td>
-                        <div class="cell">
-                            <img src="assets/img/planks.png" alt="item">
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="cell">
-                            <img src="assets/img/planks.png" alt="item">
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="cell">
-                            <img src="assets/img/planks.png" alt="item">
-                        </div>
-                    </td>
-                </tr> -->
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="2"></th>
-                    <th>
-                        <h4>0/0</h4>
-                    </th>
-                    <th colspan="2">
-                        <img src="assets/img/arrow.png" alt="next">
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
+            <div class="listfooter">
+                <img src="assets/img/arrow.png" alt="arrowBack" id="arrowBack">
+                <h4>0/0</h4>
+                <img src="assets/img/arrow.png" alt="arrowNext">
+            </div>
+        </div>
 
         <table class="craftingTable">
             <tr>
@@ -104,34 +56,6 @@
                 <td>
                 </td>
             </tr>
-            <!-- <tr>
-                <td>
-                    <div class="cell">
-                    </div>
-                </td>
-                <td>
-                    <div class="cell">
-                    </div>
-                </td>
-                <td>
-                    <div class="cell">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="cell">
-                    </div>
-                </td>
-                <td>
-                    <div class="cell">
-                    </div>
-                </td>
-                <td>
-                    <div class="cell">
-                    </div>
-                </td>
-            </tr> -->
         </table>
 
         <img src="assets/img/arrow.png" id="arrow">
@@ -144,7 +68,7 @@
     <?php include("assets/includes/footer.php") ?>
 </body>
 <script>
-    let list = document.querySelector('.list tbody');
+    let list = document.querySelector('.listCells');
 
     async function post(request) {
         try {
@@ -152,56 +76,34 @@
             const result = await response.json();
             list.innerHTML = '';
 
-            // создается массив строк, которые будут у нас tr
-            let rows = [];
-            for (let i = 0; i < result.length; i += 5) {
-                // делим их по 5 предметов
-                rows.push(result.slice(i, i + 5));
-            }
+            result.forEach(element => {
+                let cell = document.createElement('div');
+                cell.className = "cell";
+                cell.setAttribute('id_item', element.id);
 
-            rows.forEach(row => {
-                // создаем элемент tr
-                let tr = document.createElement('tr');
+                cell.innerHTML = `
+                        <img src="assets/img/${element.image}" alt=${element.name} id_item="${element.id}">
+                    `;
 
-                // цикл идет по каждой ячейке данных
-                for (let col = 0; col < 5; col++) {
-                    let td = document.createElement('td');
-
-                    if (row[col]) {
-                        td.innerHTML = `
-                        <div class="cell" id_item="${row[col].id}">
-                            <img src="assets/img/${row[col].image}" alt=${row[col].name} id_item="${row[col].id}">
-                        </div>
-                        `;
-                    }
-
-                    td.addEventListener('click', (event) => {
-                        const requestDif = new Request("assets/functions/crafts.php", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                id_item: event.target.getAttribute('id_item'),
-                                function: 'defeniteCraft'
-                            })
-                        });
-
-                        postDif(requestDif);
+                cell.addEventListener('click', (event) => {
+                    const requestDif = new Request("assets/functions/crafts.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            id_item: event.target.getAttribute('id_item'),
+                            function: 'defeniteCraft'
+                        })
                     });
 
-                    tr.appendChild(td);
-                }
+                    postDif(requestDif);
+                });
 
-                // добавляем tr в tbody
-                list.appendChild(tr);
+                list.appendChild(cell);
             });
-
-
-
         } catch (error) {
             console.error("Error:", error);
-
         }
     }
 

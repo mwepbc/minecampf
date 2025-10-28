@@ -1,9 +1,6 @@
 <?php
 
 include('connect.php');
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
-
 
 function allCrafts($dbh)
 {
@@ -45,10 +42,16 @@ function defeniteCraft($dbh, $id)
             WHERE c.crafting_item = ?
     ');
     $sth->execute([$id]);
-    $craft = $sth->fetch();
+    $craft = $sth->fetch(PDO::FETCH_ASSOC);
 
-    $result = [
+    if (!$craft) {
+        echo json_encode(['error' => 'Recipe not found']);
+        return;
+    }
+
+    echo json_encode([
         'result' => $craft['result_image'],
+        'quantity' => $craft['quantity'] ?? null,
         'slot1' => $craft['image1'] ?? null,
         'slot2' => $craft['image2'] ?? null,
         'slot3' => $craft['image3'] ?? null,
@@ -57,15 +60,13 @@ function defeniteCraft($dbh, $id)
         'slot6' => $craft['image6'] ?? null,
         'slot7' => $craft['image7'] ?? null,
         'slot8' => $craft['image8'] ?? null,
-        'slot9' => $craft['image9'] ?? null,
-        'quantity' => $craft['quantity'] ?? null
-    ];
-
-    echo json_encode($result);
+        'slot9' => $craft['image9'] ?? null
+    ]);
 }
 
 // функция вставки юзера в бд
-function insertCraft($dbh, $login, $password, $role){
+function insertCraft($dbh, $login, $password, $role)
+{
     $sth = $dbh->prepare('INSERT INTO `users`
     (`id`, `login`, `password`, `role`)
     VALUES (NULL, ?, ?, ?)');
@@ -78,11 +79,10 @@ switch ($data['function']) {
         break;
 
     case 'defeniteCraft':
-        defeniteCraft($dbh,(int)$data['id_item']);
+        defeniteCraft($dbh, (int)$data['id_item']);
         break;
-    
+
     default:
         echo 'oopseeee';
         break;
 }
-?>

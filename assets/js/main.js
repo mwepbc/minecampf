@@ -17,6 +17,6 @@ function deleteCookie(name) {
 }
 
 function adminCheck(){
-  alert('In progress!!!');
+  
   location.href = "index.php";
 }

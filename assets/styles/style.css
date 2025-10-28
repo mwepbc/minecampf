@@ -60,16 +60,27 @@ main {
     background-image: url('../img/stone.webp');
 }
 
-.list{
-    width: 33%;
-    padding: 5vh;
+h1{
+    color: white;
+}
 
-    table-layout: fixed;
-    border-spacing: 1vh;
+.list{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+
+    width: 50%;
+    padding: 5vh;
 
     background: #D9D9D9;
     border: 7px solid black;
     box-shadow: inset 7px 7px #FFFFFF, inset -7px -7px #555555;
+}
+
+.list>div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .search{
@@ -77,8 +88,18 @@ main {
     align-items: center;
 }
 
-.search img{
+.listhead img{
     width: 3vw;
+}
+
+.listCells{
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 1vh 1vw;
+}
+
+#arrowBack{
+    transform: rotate(180deg);
 }
 
 .craftingTable {
@@ -108,7 +129,7 @@ main {
     height: 100%;
 }
 
-.cell, .result {
+.cell, .result, #image {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,4 +218,38 @@ input, select{
 
 .error{
     color: #EE4451;
+}
+
+/* админ панель */
+#items{
+    width: 45%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 1vh 1vw;
+}
+
+#adminMain{
+    flex-direction: column;
+    gap: 4vh;
+    align-items: stretch
+}
+
+#adminContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+#apply, #delete{
+    display: none;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#current{
+    background-color: white;
 }
