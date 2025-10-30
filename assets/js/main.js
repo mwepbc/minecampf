@@ -15,8 +15,3 @@ function getCookie(name) {
 function deleteCookie(name) {
   document.cookie = `user=${name}; max-age=0`;
 }
-
-function adminCheck(){
-  
-  location.href = "index.php";
-}

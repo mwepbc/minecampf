@@ -58,6 +58,13 @@
 <script>
     const items = document.querySelector('.listCells');
 
+    let error_p = document.querySelector(".error")
+
+    // кнопки справа
+    let applyButton = document.querySelector('#apply');
+    let deleteButton = document.querySelector('#delete');
+    let addButton = document.querySelector('#add');
+
     async function postItems(request) {
         try {
             const response = await fetch(request);
@@ -89,13 +96,19 @@
 
                     postDif(requestDif);
                 });
-
                 items.appendChild(cell);
             });
 
             // очистка полей
             nameInput.value = '';
             imageInput.value = '';
+            image.src = "";
+
+            // возврат кнопки добавления и удаление кнопок удаления и редактирования
+            addButton.style.display = 'flex';
+            deleteButton.style.display = 'none';
+            applyButton.style.display = 'none';
+
         } catch (error) {
             console.error("Error:", error);
         }
@@ -128,13 +141,6 @@
         reader.readAsDataURL(file);
     })
 
-    let error_p = document.querySelector(".error")
-
-    // кнопки справа
-    let applyButton = document.querySelector('#apply');
-    let deleteButton = document.querySelector('#delete');
-    let addButton = document.querySelector('#add');
-
     addButton.addEventListener('click', () => {
         let name = nameInput.value;
         let image = imageInput.files[0];
@@ -157,7 +163,46 @@
 
             postInsert(requestInsert);
         }
+    });
 
+    deleteButton.addEventListener('click', () => {
+        const requestDelete = new Request("assets/functions/items.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "id_item": getCookie('item'),
+                function: "deleteItem"
+            })
+        });
+
+        postDelete(requestDelete);
+    });
+
+    applyButton.addEventListener('click', () => {
+        let name = nameInput.value;
+        let image = imageInput.files[0];
+
+        if (!name) {
+            error_p.innerHTML = "Имя не должно быть пустым";
+        } else {
+            let formData = new FormData();
+            formData.append('function', 'updateItem');
+            formData.append('name', name);
+            formData.append('image_url', image);
+            formData.append('id_item', getCookie('item'));
+
+            const requestUpdate = new Request("assets/functions/items.php", {
+                method: "POST",
+                // headers: {
+                //     "Content-Type": "application/json",
+                // },
+                body: formData
+            });
+
+            postUpdate(requestUpdate);
+        }
     });
 
     //post для отправки selectDif и отображения характеристик предмета
@@ -184,7 +229,6 @@
         try {
             const response = await fetch(request);
             const result = await response.json();
-            console.log(result);
 
             if (result.error) {
                 error_p.innerHTML = result.error;
@@ -192,6 +236,38 @@
 
             postItems(createAllItemsRequest());
 
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    async function postDelete(request) {
+        try {
+            const response = await fetch(request);
+            const result = await response.json();
+            console.log(result);
+
+            if (result.error) {
+                error_p.innerHTML = result.error;
+            }
+
+            postItems(createAllItemsRequest());
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    async function postUpdate(request) {
+        try {
+            const response = await fetch(request);
+            const result = await response.json();
+            console.log(result);
+
+            if (result.error) {
+                error_p.innerHTML = result.error;
+            }
+
+            postItems(createAllItemsRequest());
         } catch (error) {
             console.error("Error:", error);
         }
